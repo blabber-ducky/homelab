@@ -32,5 +32,7 @@ services:
     volumes:
       - ${CONFIGS}syncthing:/config
       - ${DATA}/sync-folders:/data1
+    depends_on:
+      - syncthing-ts
     network_mode: service:syncthing-ts
     restart: unless-stopped
