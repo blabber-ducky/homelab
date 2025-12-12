@@ -2,7 +2,7 @@ services:
   syncthing-ts:
     image: tailscale/tailscale:latest
     container_name: syncthing-ts
-    hostname: syncthing
+    hostname: mr-syncthing
     environment:
       #  - TS_AUTHKEY=value
       - TS_STATE_DIR=/var/lib/tailscale
