@@ -23,8 +23,7 @@ services:
 
   syncthing:
     image: lscr.io/linuxserver/syncthing:latest
-    container_name: syncthing
-    hostname: syncthing-serv #optional
+    container_name: syncthing #optional
     environment:
       - PUID=1000
       - PGID=1000
