@@ -8,6 +8,6 @@ cd /home/home_admin/homelab/filebrowser &&
 docker compose down &&
 docker compose up -d &&
 
-cd /home/home_admin/homelab/syncthing &&
+cd /home/home_admin/homelab/samba &&
 docker compose down &&
 docker compose up -d
