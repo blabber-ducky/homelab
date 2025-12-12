@@ -3,7 +3,7 @@ services:
   filebrowser-ts:
     image: tailscale/tailscale:latest
     container_name: filebrowser-ts
-    hostname: filebrowser
+    hostname: mr-filebrowser
     environment:
       #  - TS_AUTHKEY=value
       - TS_STATE_DIR=/var/lib/tailscale
