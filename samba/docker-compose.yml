@@ -4,7 +4,7 @@ services:
     container_name: samba-ts
     hostname: mr-samba
     environment:
-      #  - TS_AUTHKEY=value
+      - TS_AUTHKEY=${AUTHKEY}
       - TS_STATE_DIR=/var/lib/tailscale
       - TS_EXTRA_ARGS=--advertise-tags=tag:samba
     volumes:
