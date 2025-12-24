@@ -10,7 +10,7 @@ configs:
 services:
   karakeep-ts:
     image: tailscale/tailscale:latest
-    hostname: karakeep
+    hostname: mr-karakeep
     environment:
       - TS_AUTHKEY=${AUTH}
       - TS_STATE_DIR=/var/lib/tailscale

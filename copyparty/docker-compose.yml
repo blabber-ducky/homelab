@@ -51,7 +51,7 @@ services:
   copyparty-ts:
     image: tailscale/tailscale:latest
     container_name: copyparty-ts
-    hostname: copyparty
+    hostname: mr-copyparty
     environment:
       - TS_AUTHKEY=${AUTHKEY}
       - TS_STATE_DIR=/var/lib/tailscale

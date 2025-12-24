@@ -11,7 +11,7 @@ services:
   jellyfin-ts:
     image: tailscale/tailscale:latest
     container_name: jellyfin-ts
-    hostname: jellyfin
+    hostname: mr-jellyfin
     environment:
       - TS_AUTHKEY=${AUTH}
       - TS_STATE_DIR=/var/lib/tailscale
