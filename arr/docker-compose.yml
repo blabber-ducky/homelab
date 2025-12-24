@@ -1,0 +1,87 @@
+services:
+  gluetun:
+    image: qmcgaw/gluetun
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    ports:
+      - 8888:8888/tcp # HTTP proxy
+      - 8388:8388/tcp # Shadowsocks
+      - 8388:8388/udp # Shadowsocks
+      - 9696:9696
+      - 7878:7878
+      - 8989:8989
+      - 8080:8080
+      - 6881:6881
+      - 6881:6881/udp
+    volumes:
+      - ${CONFIGS}gluetun:/gluetun
+    environment:
+      - PUID=1000
+      - PGID=1000
+      # See https://github.com/qdm12/gluetun-wiki/tree/main/setup#setup
+      - VPN_SERVICE_PROVIDER=ivpn
+      - VPN_TYPE=openvpn
+      # OpenVPN:
+      - OPENVPN_USER=${VPNUSER}
+      - OPENVPN_PASSWORD=${VPNPASS}
+      - TZ=Asia/Dubai
+      # Server list updater
+      # See https://github.com/qdm12/gluetun-wiki/blob/main/setup/servers.md#update-the-vpn-servers-list
+      - UPDATER_PERIOD=
+
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Dubai
+    volumes:
+      - ${CONFIGS}prowlarr:/config
+    network_mode: service:glutun
+    restart: unless-stopped
+
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Dubai
+    volumes:
+      - ${CONFIGS}radarr:/config
+      - ${DATA}movies:/movies #optional
+      - ${DATA}downloads:/downloads #optional
+    network_mode: service:glutun
+    restart: unless-stopped
+
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Dubai
+    volumes:
+      - ${CONFIGS}sonarr:/config
+      - ${DATA}tvshows:/tv #optional
+      - ${DATA}downloads:/downloads #optional
+    network_mode: service:glutun
+    restart: unless-stopped
+
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Dubai
+      - WEBUI_PORT=8080
+      - TORRENTING_PORT=6881
+    volumes:
+      - ${CONFIGS}qbittorrent:/config
+      - ${DATA}downloads:/downloads
+    network_mode: service:glutun
+    restart: unless-stopped
