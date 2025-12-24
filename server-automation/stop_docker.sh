@@ -2,12 +2,12 @@
 
 export services=$(docker ps --filter "label=com.docker.compose.project" -q | xargs docker inspect --format='{{index .Config.Labels "com.docker.compose.project"}}'| sort | uniq)
 
-echo -e "\e[31mFollowing services are running:\e[0m"
+echo -e "\e[32mFollowing services are running:\e[0m"
 echo $services
 
 for service in $services;
 do
-        echo -e "\e[31mWorking on $service .....\e[0m"
+        echo -e "\e[32mWorking on $service .....\e[0m"
 
         if [[ "$service" = "samba" ]];
         then
@@ -23,5 +23,5 @@ do
 
 done;
 
-echo -e "\e[31mFinished stopping the following services:\e[0m"
+echo -e "\e[32mFinished stopping the following services:\e[0m"
 echo $services
