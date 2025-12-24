@@ -7,46 +7,6 @@ configs:
           {"Proxy":"http://127.0.0.1:3923"}}}},
       "AllowFunnel":{"$${TS_CERT_DOMAIN}:443":false}}
 
-  copyparty-config:
-    content: |
-      [global]
-      e2dsa
-      rproxy: -1
-
-      [accounts]
-      shimmer:changeme
-      guest:changeme2
-
-      [/courses]
-      /data/courses
-      accs:
-        rw: shimmer
-        r: guest
-
-      [/wallpapers]
-      /data/wallpapers
-      accs:
-        rw: shimmer
-        r: guest
-
-      [/sw]
-      /data/sw
-      accs:
-        rw: shimmer
-        r: guest
-
-      [/upload]
-      /data/upload
-      accs:
-        rw: shimmer
-        rw: guest
-
-      [/workouts]
-      /data/workouts
-      accs:
-        rw: shimmer
-        r: guest
-
 services:
   copyparty-ts:
     image: tailscale/tailscale:latest
@@ -68,9 +28,7 @@ services:
     image: copyparty/ac:latest
     container_name: copyparty
     network_mode: service:copyparty-ts
-    configs:
-      - source: copyparty-config
-        target: /cfg/config.conf
     volumes:
       - ${DATA}:/data
+      - ${CONFIGS}copyparty/copy.conf:/cfg/config.conf
     restart: unless-stopped

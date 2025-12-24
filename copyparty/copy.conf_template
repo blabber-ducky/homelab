@@ -1,0 +1,37 @@
+[global]
+    e2dsa
+    rproxy: -1
+
+[accounts]
+    shimmer:changeme
+    guest:changeme2
+
+[/courses]
+    /data/courses
+    accs:
+        rw: shimmer
+        r: guest
+
+[/wallpapers]
+    /data/wallpapers
+    accs:
+        rw: shimmer
+        r: guest
+
+[/sw]
+    /data/sw
+    accs:
+        rw: shimmer
+        r: guest
+
+[/upload]
+    /data/upload
+    accs:
+        rw: shimmer
+        rw: guest
+
+[/workouts]
+    /data/workouts
+    accs:
+        rw: shimmer
+        r: guest
