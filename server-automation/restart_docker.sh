@@ -1,6 +1,11 @@
 #!/bin/bash
 
-export services=$(docker ps --filter "label=com.docker.compose.project" -q | xargs docker inspect --format='{{index .Config.Labels "com.docker.compose.project"}}'| sort | uniq)
+if [[ $1 ]]
+then
+    export services=$1;
+else
+    export services=$(docker ps --filter "label=com.docker.compose.project" -q | xargs docker inspect --format='{{index .Config.Labels "com.docker.compose.project"}}'| sort | uniq)
+fi
 
 echo -e "\e[32mFollowing services are running:\e[0m"
 echo $services
@@ -19,8 +24,28 @@ do
                 cd ~/immich-app &&
                 docker compose down &&
                 docker compose up -d;
+        elif [[ "$service" = "copyparty" ]];
+        then
+                cd ~/homelab/copyparty &&
+                docker compose down &&
+                docker compose up -d;
+        elif [[ "$service" = "karakeep" ]];
+        then
+                cd ~/homelab/karakeep &&
+                docker compose down &&
+                docker compose up -d;
+        elif [[ "$service" = "jellyfin" ]];
+        then
+                cd ~/homelab/jellyfin &&
+                docker compose down &&
+                docker compose up -d;
+        elif [[ "$service" = "arr" ]];
+        then
+                cd ~/homelab/arr &&
+                docker compose down &&
+                docker compose up -d;
         else
-                echo "Did not find $service in configuration";
+                echo -e "\e[31mDid not find $service in configuration\e[0m";
         fi
 
 done;
