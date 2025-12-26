@@ -12,7 +12,7 @@ services:
     image: tailscale/tailscale:latest
     hostname: mr-karakeep
     environment:
-      - TS_AUTHKEY=${AUTH}
+      - TS_AUTHKEY=${AUTHKEY}
       - TS_STATE_DIR=/var/lib/tailscale
       - TS_USERSPACE=true
     volumes:
