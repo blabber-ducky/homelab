@@ -24,19 +24,18 @@ services:
     container_name: karakeep-app
     restart: unless-stopped
     volumes:
-      - ${PWD}/karakeep/data:/data
+      - ${CONFIGS}/karakeep/data:/data
     network_mode: service:karakeep-ts
     environment:
       - MEILI_ADDR=http://karakeep-meilisearch:7700
       - BROWSER_WEB_URL=http://karakeep-chrome:9222
-      - NEXTAUTH_SECRET=123
-      - MEILI_MASTER_KEY=123
-      - NEXTAUTH_URL=https://karakeep.velociraptor-noodlefish.ts.net
-      - DATA_DIR=/data
+      - NEXTAUTH_SECRET=${NEXTAUTHKEY}
+      - MEILI_MASTER_KEY=${MEILIEKEY}
+      - NEXTAUTH_URL=https://mr-karakeep.pegasus-acrux.ts.net
       - CRAWLER_STORE_SCREENSHOT=true
       - CRAWLER_FULL_PAGE_SCREENSHOT=true
       - CRAWLER_ENABLE_ADBLOCKER=true
-      - OPENAI_API_KEY=123
+      - OPENAI_API_KEY=${OPENAIKEY}
 
   karakeep-chrome:
     image: gcr.io/zenika-hub/alpine-chrome:123
@@ -56,6 +55,6 @@ services:
     restart: unless-stopped
     environment:
       - MEILI_NO_ANALYTICS=true
-      - MEILI_MASTER_KEY=123
+      - MEILI_MASTER_KEY=${MEILIEKEY}
     volumes:
-      - ${DATA}/karakeep/meilisearch:/meili_data
+      - ${CONFIGS}/karakeep/meilisearch:/meili_data
