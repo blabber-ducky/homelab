@@ -10,6 +10,7 @@ then
     fi
 else
     echo -e "\e[31mNeed any of these arguments: all <service name>\e[0m"
+fi
 
 echo -e "\e[32mFollowing services are running:\e[0m"
 echo $services
