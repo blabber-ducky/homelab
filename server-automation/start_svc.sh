@@ -1,12 +1,15 @@
 #!/bin/bash
 
-if [[ "$1" = "all" ]]
+if [[ $1 ]]
 then
-    export services=$(cat current-svc);
+    if [[ "$1" = "all" ]]
+    then
+        export services=$(cat current-svc);
+    else
+        export services=$1;
+    fi
 else
-    export services=$1;
-fi
-
+    echo -e "\e[31mNeed any of these arguments: all <service name>\e[0m"
 
 echo -e "\e[32mFollowing services are running:\e[0m"
 echo $services
