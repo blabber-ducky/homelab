@@ -4,7 +4,7 @@ if [[ $1 ]]
 then
     if [[ "$1" = "all" ]]
     then
-        export services=$(cat current-svc);
+        export services=$(cat current_svc);
     else
         export services=$1;
     fi
