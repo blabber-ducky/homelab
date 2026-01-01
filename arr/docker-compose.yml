@@ -1,6 +1,37 @@
+configs:
+  arr-ts-serve:
+    content: |
+      {"TCP":{"443":{"HTTPS":true}},
+      "Web":{"$${TS_CERT_DOMAIN}:443":
+          {"Handlers":{"/son":
+          {"Proxy":"http://127.0.0.1:8989"},
+          "/rad":
+          {"Proxy":"http://127.0.0.1:7878"},
+          "/prowl":
+          {"Proxy":"http://127.0.0.1:9696"},
+          "/qbit":
+          {"Proxy":"http://127.0.0.1:8080"}}}},
+      "AllowFunnel":{"$${TS_CERT_DOMAIN}:443":false}}
+
 services:
+  arr-ts:
+    image: tailscale/tailscale:latest
+    container_name: arr-ts
+    hostname: mr-arr
+    environment:
+      - TS_AUTHKEY=${AUTH}
+      - TS_STATE_DIR=/var/lib/tailscale
+      - TS_USERSPACE=true
+    configs:
+      - source: arr-ts-serve
+        target: /config/serve.json
+    volumes:
+      - ${PWD}/state:/var/lib/tailscale
+    restart: unless-stopped
+
   gluetun:
     image: qmcgaw/gluetun
+    container_name: arr-tun
     cap_add:
       - NET_ADMIN
     devices:
@@ -9,10 +40,6 @@ services:
       - 8888:8888/tcp # HTTP proxy
       - 8388:8388/tcp # Shadowsocks
       - 8388:8388/udp # Shadowsocks
-      - 9696:9696
-      - 7878:7878
-      - 8989:8989
-      - 8080:8080
       - 6881:6881
       - 6881:6881/udp
     volumes:
@@ -21,12 +48,13 @@ services:
       - PUID=1000
       - PGID=1000
       # See https://github.com/qdm12/gluetun-wiki/tree/main/setup#setup
-      - VPN_SERVICE_PROVIDER=ivpn
+      - VPN_SERVICE_PROVIDER=nordvpn
       - VPN_TYPE=openvpn
       # OpenVPN:
       - OPENVPN_USER=${VPNUSER}
       - OPENVPN_PASSWORD=${VPNPASS}
       - TZ=Asia/Dubai
+      - SERVER_COUNTRIES=${COUNTRIES}
       # Server list updater
       # See https://github.com/qdm12/gluetun-wiki/blob/main/setup/servers.md#update-the-vpn-servers-list
       - UPDATER_PERIOD=
