@@ -1,17 +1,49 @@
 configs:
   arr-ts-serve:
     content: |
-      {"TCP":{"443":{"HTTPS":true}},
-      "Web":{"$${TS_CERT_DOMAIN}:443":
-          {"Handlers":{"/son":
-          {"Proxy":"https+insecure://sonarr:8989"},
-          "/rad":
-          {"Proxy":"https+insecure://radarr:7878"},
-          "/prowl":
-          {"Proxy":"https+insecure://prowlarr:9696"},
-          "/qbit":
-          {"Proxy":"https+insecure://qbittorrent:8080"}}}},
-      "AllowFunnel":{"$${TS_CERT_DOMAIN}:443":false}}
+      {
+        "TCP": {
+          "443": {
+            "HTTPS": true
+          }
+        },
+        "Web": {
+          "son.$${TS_CERT_DOMAIN}:443": {
+            "Handlers": {
+              "/": {
+                "Proxy": "http://127.0.0.1:8989"
+              }
+            }
+          },
+          "rad.$${TS_CERT_DOMAIN}:443": {
+            "Handlers": {
+              "/": {
+                "Proxy": "http://127.0.0.1:7878"
+              }
+            }
+          },
+          "prowl.$${TS_CERT_DOMAIN}:443": {
+            "Handlers": {
+              "/": {
+                "Proxy": "http://127.0.0.1:9696"
+              }
+            }
+          },
+          "qbit.$${TS_CERT_DOMAIN}:443": {
+            "Handlers": {
+              "/": {
+                "Proxy": "http://127.0.0.1:8080"
+              }
+            }
+          }
+        },
+        "AllowFunnel": {
+          "son.$${TS_CERT_DOMAIN}:443": false,
+          "rad.$${TS_CERT_DOMAIN}:443": false,
+          "prowl.$${TS_CERT_DOMAIN}:443": false,
+          "qbit.$${TS_CERT_DOMAIN}:443": false
+        }
+      }
 
 services:
   arr-ts:
