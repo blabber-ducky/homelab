@@ -1,66 +1,4 @@
-configs:
-  arr-ts-serve:
-    content: |
-      {
-        "TCP": {
-          "443": {
-            "HTTPS": true
-          }
-        },
-        "Web": {
-          "$${TS_CERT_DOMAIN}:8443": {
-            "Handlers": {
-              "/": {
-                "Proxy": "https+insecure://sonarr:8989"
-              }
-            }
-          },
-          "$${TS_CERT_DOMAIN}:7443": {
-            "Handlers": {
-              "/": {
-                "Proxy": "https+insecure://radarr:7878"
-              }
-            }
-          },
-          "$${TS_CERT_DOMAIN}:9443": {
-            "Handlers": {
-              "/": {
-                "Proxy": "https+insecure://prowlarr:9696"
-              }
-            }
-          },
-          "qbit.$${TS_CERT_DOMAIN}:8843": {
-            "Handlers": {
-              "/": {
-                "Proxy": "https+insecure://qbittorrent:8080"
-              }
-            }
-          }
-        },
-        "AllowFunnel": {
-          "$${TS_CERT_DOMAIN}:9443": false,
-          "$${TS_CERT_DOMAIN}:8443": false,
-          "$${TS_CERT_DOMAIN}:7443": false,
-          "$${TS_CERT_DOMAIN}:8843": false
-        }
-      }
-
 services:
-  arr-ts:
-    image: tailscale/tailscale:latest
-    container_name: arr-ts
-    hostname: mr-arr
-    environment:
-      - TS_AUTHKEY=${AUTHKEY}
-      - TS_STATE_DIR=/var/lib/tailscale
-      - TS_USERSPACE=true
-    configs:
-      - source: arr-ts-serve
-        target: /config/serve.json
-    volumes:
-      - ${PWD}/state:/var/lib/tailscale
-    restart: unless-stopped
-
   # gluetun:
   #   image: qmcgaw/gluetun
   #   container_name: arr-tun
@@ -98,6 +36,8 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Asia/Dubai
+    ports:
+      - 9696:9696
     volumes:
       - ${CONFIGS}prowlarr:/config
     # network_mode: service:glutun
@@ -110,6 +50,8 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Asia/Dubai
+    ports:
+      - 7878:7878
     volumes:
       - ${CONFIGS}radarr:/config
       - ${DATA}movies:/movies #optional
@@ -124,6 +66,8 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Asia/Dubai
+    ports:
+      - 8989:8989
     volumes:
       - ${CONFIGS}sonarr:/config
       - ${DATA}tvshows:/tv #optional
@@ -140,6 +84,8 @@ services:
       - TZ=Asia/Dubai
       - WEBUI_PORT=8080
       - TORRENTING_PORT=6881
+    ports:
+      - 8080:8080
     volumes:
       - ${CONFIGS}qbittorrent:/config
       - ${DATA}downloads:/downloads
