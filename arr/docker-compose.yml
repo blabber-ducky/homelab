@@ -4,13 +4,13 @@ configs:
       {"TCP":{"443":{"HTTPS":true}},
       "Web":{"$${TS_CERT_DOMAIN}:443":
           {"Handlers":{"/son":
-          {"Proxy":"http://sonarr:8989"},
+          {"Proxy":"https+insecure://sonarr:8989"},
           "/rad":
-          {"Proxy":"http://radarr:7878"},
+          {"Proxy":"https+insecure://radarr:7878"},
           "/prowl":
-          {"Proxy":"http://prowlarr:9696"},
+          {"Proxy":"https+insecure://prowlarr:9696"},
           "/qbit":
-          {"Proxy":"http://qbittorrent:8080"}}}},
+          {"Proxy":"https+insecure://qbittorrent:8080"}}}},
       "AllowFunnel":{"$${TS_CERT_DOMAIN}:443":false}}
 
 services:
