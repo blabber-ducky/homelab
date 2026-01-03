@@ -3,36 +3,45 @@ configs:
     content: |
       {
         "TCP": {
-          "443": {
+          "9443": {
             "HTTPS": true
-          }
+          },
+          "8443": {
+            "HTTPS": true
+          },
+          "7443": {
+            "HTTPS": true
+          },
+          "8843": {
+            "HTTPS": true
+          },
         },
         "Web": {
-          "son.$${TS_CERT_DOMAIN}:443": {
+          "$${TS_CERT_DOMAIN}:8443": {
             "Handlers": {
               "/": {
-                "Proxy": "http://127.0.0.1:8989"
+                "Proxy": "http://sonarr:8989"
               }
             }
           },
-          "rad.$${TS_CERT_DOMAIN}:443": {
+          "$${TS_CERT_DOMAIN}:7443": {
             "Handlers": {
               "/": {
-                "Proxy": "http://127.0.0.1:7878"
+                "Proxy": "http://radarr:7878"
               }
             }
           },
-          "prowl.$${TS_CERT_DOMAIN}:443": {
+          "$${TS_CERT_DOMAIN}:9443": {
             "Handlers": {
               "/": {
-                "Proxy": "http://127.0.0.1:9696"
+                "Proxy": "http://prowlarr:9696"
               }
             }
           },
-          "qbit.$${TS_CERT_DOMAIN}:443": {
+          "qbit.$${TS_CERT_DOMAIN}:8843": {
             "Handlers": {
               "/": {
-                "Proxy": "http://127.0.0.1:8080"
+                "Proxy": "http://qbittorrent:8080"
               }
             }
           }
