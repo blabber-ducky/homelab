@@ -3,18 +3,9 @@ configs:
     content: |
       {
         "TCP": {
-          "9443": {
+          "443": {
             "HTTPS": true
-          },
-          "8443": {
-            "HTTPS": true
-          },
-          "7443": {
-            "HTTPS": true
-          },
-          "8843": {
-            "HTTPS": true
-          },
+          }
         },
         "Web": {
           "$${TS_CERT_DOMAIN}:8443": {
