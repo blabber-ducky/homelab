@@ -47,10 +47,10 @@ configs:
           }
         },
         "AllowFunnel": {
-          "son.$${TS_CERT_DOMAIN}:443": false,
-          "rad.$${TS_CERT_DOMAIN}:443": false,
-          "prowl.$${TS_CERT_DOMAIN}:443": false,
-          "qbit.$${TS_CERT_DOMAIN}:443": false
+          "$${TS_CERT_DOMAIN}:9443": false,
+          "$${TS_CERT_DOMAIN}:8443": false,
+          "$${TS_CERT_DOMAIN}:7443": false,
+          "$${TS_CERT_DOMAIN}:8843": false
         }
       }
 
