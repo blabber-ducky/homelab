@@ -68,7 +68,7 @@ services:
       - TZ=Asia/Dubai
     volumes:
       - ${CONFIGS}prowlarr:/config
-    network_mode: service:glutun
+    # network_mode: service:glutun
     restart: unless-stopped
 
   radarr:
@@ -82,7 +82,7 @@ services:
       - ${CONFIGS}radarr:/config
       - ${DATA}movies:/movies #optional
       - ${DATA}downloads:/downloads #optional
-    network_mode: service:glutun
+    # network_mode: service:glutun
     restart: unless-stopped
 
   sonarr:
@@ -96,7 +96,7 @@ services:
       - ${CONFIGS}sonarr:/config
       - ${DATA}tvshows:/tv #optional
       - ${DATA}downloads:/downloads #optional
-    network_mode: service:glutun
+    # network_mode: service:glutun
     restart: unless-stopped
 
   qbittorrent:
@@ -111,5 +111,5 @@ services:
     volumes:
       - ${CONFIGS}qbittorrent:/config
       - ${DATA}downloads:/downloads
-    network_mode: service:glutun
+    # network_mode: service:glutun
     restart: unless-stopped
