@@ -19,7 +19,7 @@ services:
     container_name: arr-ts
     hostname: mr-arr
     environment:
-      - TS_AUTHKEY=${AUTH}
+      - TS_AUTHKEY=${AUTHKEY}
       - TS_STATE_DIR=/var/lib/tailscale
       - TS_USERSPACE=true
     configs:
