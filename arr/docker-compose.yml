@@ -4,13 +4,13 @@ configs:
       {"TCP":{"443":{"HTTPS":true}},
       "Web":{"$${TS_CERT_DOMAIN}:443":
           {"Handlers":{"/son":
-          {"Proxy":"http://127.0.0.1:8989"},
+          {"Proxy":"http://sonarr:8989"},
           "/rad":
-          {"Proxy":"http://127.0.0.1:7878"},
+          {"Proxy":"http://radarr:7878"},
           "/prowl":
-          {"Proxy":"http://127.0.0.1:9696"},
+          {"Proxy":"http://prowlarr:9696"},
           "/qbit":
-          {"Proxy":"http://127.0.0.1:8080"}}}},
+          {"Proxy":"http://qbittorrent:8080"}}}},
       "AllowFunnel":{"$${TS_CERT_DOMAIN}:443":false}}
 
 services:
@@ -29,35 +29,35 @@ services:
       - ${PWD}/state:/var/lib/tailscale
     restart: unless-stopped
 
-  gluetun:
-    image: qmcgaw/gluetun
-    container_name: arr-tun
-    cap_add:
-      - NET_ADMIN
-    devices:
-      - /dev/net/tun:/dev/net/tun
-    ports:
-      - 8888:8888/tcp # HTTP proxy
-      - 8388:8388/tcp # Shadowsocks
-      - 8388:8388/udp # Shadowsocks
-      - 6881:6881
-      - 6881:6881/udp
-    volumes:
-      - ${CONFIGS}gluetun:/gluetun
-    environment:
-      - PUID=1000
-      - PGID=1000
-      # See https://github.com/qdm12/gluetun-wiki/tree/main/setup#setup
-      - VPN_SERVICE_PROVIDER=nordvpn
-      - VPN_TYPE=openvpn
-      # OpenVPN:
-      - OPENVPN_USER=${VPNUSER}
-      - OPENVPN_PASSWORD=${VPNPASS}
-      - TZ=Asia/Dubai
-      - SERVER_COUNTRIES=${COUNTRIES}
-      # Server list updater
-      # See https://github.com/qdm12/gluetun-wiki/blob/main/setup/servers.md#update-the-vpn-servers-list
-      - UPDATER_PERIOD=
+  # gluetun:
+  #   image: qmcgaw/gluetun
+  #   container_name: arr-tun
+  #   cap_add:
+  #     - NET_ADMIN
+  #   devices:
+  #     - /dev/net/tun:/dev/net/tun
+  #   ports:
+  #     - 8888:8888/tcp # HTTP proxy
+  #     - 8388:8388/tcp # Shadowsocks
+  #     - 8388:8388/udp # Shadowsocks
+  #     - 6881:6881
+  #     - 6881:6881/udp
+  #   volumes:
+  #     - ${CONFIGS}gluetun:/gluetun
+  #   environment:
+  #     - PUID=1000
+  #     - PGID=1000
+  #     # See https://github.com/qdm12/gluetun-wiki/tree/main/setup#setup
+  #     - VPN_SERVICE_PROVIDER=nordvpn
+  #     - VPN_TYPE=openvpn
+  #     # OpenVPN:
+  #     - OPENVPN_USER=${VPNUSER}
+  #     - OPENVPN_PASSWORD=${VPNPASS}
+  #     - TZ=Asia/Dubai
+  #     - SERVER_COUNTRIES=${COUNTRIES}
+  #     # Server list updater
+  #     # See https://github.com/qdm12/gluetun-wiki/blob/main/setup/servers.md#update-the-vpn-servers-list
+  #     - UPDATER_PERIOD=
 
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:latest
