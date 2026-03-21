@@ -35,5 +35,7 @@ services:
       - ${CONFIGS}jellyfin:/config
       - ${DATA}tvshows:/data/tvshows
       - ${DATA}movies:/data/movies
+    devices:
+      - /dev/dri:/dev/dri
     network_mode: service:jellyfin-ts
     restart: unless-stopped
